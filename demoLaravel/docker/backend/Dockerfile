@@ -6,11 +6,10 @@ RUN apt-get update \
     && curl -sL https://deb.nodesource.com/setup_12.x | bash - && apt-get install -y nodejs \
     && apt-get install -y git
 
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
 ENV COMPOSER_HOME /composer
 ENV PATH ./vendor/bin:/composer/vendor/bin:$PATH
 ENV COMPOSER_ALLOW_SUPERUSER 1
-RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
-
-RUN composer global require "laravel/installer"
 
 WORKDIR /var/www/app
