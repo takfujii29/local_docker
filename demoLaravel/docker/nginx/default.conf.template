@@ -29,6 +29,4 @@ server {
   location @backend {
     rewrite ^/backend/(.*)$ /backend/index.php last;
   }
-
-
 }

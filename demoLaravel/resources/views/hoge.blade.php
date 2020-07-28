@@ -6,7 +6,6 @@
   <title>Document</title>
 </head>
 <body>
-  <p>{{$name}}</p>
   <p>{{$keyword}}</p>
 </body>
 </html>

@@ -17,5 +17,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/hoge/{name}', 'HogeController@index');
-Route::post('/hoge/{name}', 'HogeController@index');
+Route::get('/hoge', 'HogeController@index');
