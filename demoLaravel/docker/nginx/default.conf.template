@@ -16,15 +16,19 @@ server {
   location /backend/ {
     alias /var/www/app/public/;
     index index.php index.html index.htm;
-    try_files $uri $uri/ /index.php$is_args$args;
+    try_files $uri $uri/ @backend;
+
+    location ~ \.php$ {
+      fastcgi_pass ${BACKEND}:${PHP_APP_PORT};
+      fastcgi_index index.php;
+      include fastcgi_params;
+      fastcgi_param SCRIPT_FILENAME /var/www/app/public/index.php;
+    }
   }
 
-  location ~ \.php$ {
-    fastcgi_split_path_info ^(.+\.php)(/.+)$;
-    fastcgi_pass ${BACKEND}:${PHP_APP_PORT};
-    fastcgi_index index.php;
-    include fastcgi_params;
-    fastcgi_param SCRIPT_FILENAME /var/www/app/public/index.php;
-    fastcgi_param PATH_INFO $fastcgi_path_info;
+  location @backend {
+    rewrite ^/backend/(.*)$ /backend/index.php last;
   }
+
+
 }
